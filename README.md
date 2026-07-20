@@ -7,7 +7,7 @@ A single-file web app for planning your [SIGGRAPH 2026](https://s2026.siggraph.o
 ## Features
 
 - Full conference schedule — 487 sessions across all five days, browsable by day, program type, and free-text search
-- Paper-level detail for all 58 Technical Papers sessions (406 papers: titles, full author lists, presenters, per-paper times, session chairs) pulled from the official schedule — search any author's name to find their talk; matching papers expand and highlight automatically
+- Paper-level detail for all 58 Technical Papers sessions (406 papers: titles, full author lists, presenters, per-paper times, thumbnails, session chairs) pulled from the official schedule — search any author's name to find their talk; matching papers expand and highlight automatically
 - Pin sessions (★) to build a personal agenda; pins persist in your browser via localStorage
 - Automatic conflict detection between overlapping pinned sessions
 - Export pinned sessions as an `.ics` file (with configurable reminders) for import into Google Calendar / Apple Calendar — phone notifications come free; Technical Papers events include the full paper lineup in the description
@@ -16,9 +16,10 @@ A single-file web app for planning your [SIGGRAPH 2026](https://s2026.siggraph.o
 
 ## Files
 
-- `index.html` — the app (fully self-contained: data, CSS and JS inlined)
+- `index.html` — the app (data, CSS and JS inlined; paper thumbnails lazy-load from `data/thumbs/`)
 - `siggraph2026_my_picks.ics` — ready-to-import calendar of the initially pinned sessions (15-min reminders, `America/Los_Angeles` timezone)
 - `data/sessions.json` — the extracted schedule data
+- `data/thumbs/` — paper representative images (resized to 200 px thumbnails)
 
 ## Notes
 
