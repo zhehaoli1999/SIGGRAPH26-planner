@@ -10,6 +10,7 @@ A single-file web app for planning your [SIGGRAPH 2026](https://s2026.siggraph.o
 - Paper-level detail for all 58 Technical Papers sessions (406 papers: titles, full author lists, presenters, per-paper times, thumbnails, session chairs) pulled from the official schedule — search any author's name to find their talk; matching papers expand and highlight automatically
 - Keyword filter chips (official taxonomy: Geometry, AI/ML, Animation, Fabrication, …) — narrow all 406 papers by topic; matching papers highlight and their sessions auto-expand, with keyword tags shown on every paper
 - Overview tab — Keenan-Crane-style per-day columns summarizing any program category (default: Technical Papers); pin from the list (★) or tap a session to jump to its full card
+- Session and paper titles link (↗) to their page on the official schedule site — 422 sessions and all 406 papers carry official ids (the few unlinked entries are aggregates like grouped poster listings with no single official page)
 - Pin sessions (★) to build a personal agenda; pins persist in your browser via localStorage
 - Automatic conflict detection between overlapping pinned sessions
 - Export pinned sessions as an `.ics` file (with configurable reminders) for import into Google Calendar / Apple Calendar — phone notifications come free; Technical Papers events include the full paper lineup in the description
