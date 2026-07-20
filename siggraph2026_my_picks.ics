@@ -1,0 +1,318 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//SIGGRAPH2026 Personal Planner//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:SIGGRAPH 2026 (my sessions)
+X-WR-TIMEZONE:America/Los_Angeles
+BEGIN:VTIMEZONE
+TZID:America/Los_Angeles
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+TZNAME:PDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+TZNAME:PST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:sig26-s005@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260719T090000
+DTEND;TZID=America/Los_Angeles:20260719T121500
+SUMMARY:SIGGRAPH: AI for Creative Visual Content Generation Editing and U
+ nderstanding (CVEU 2026)
+LOCATION:Room 408 A\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Course] Speakers: Zheng Wei\, Yuying Tang\, Mia Tang\, Anyi 
+ Rao
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: AI for Creative Visual Content Generation Edit
+ ing and Understanding (CVEU 2026)
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s049@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260719T154500
+DTEND;TZID=America/Los_Angeles:20260719T171500
+SUMMARY:SIGGRAPH: Fluid Simulation with the Lattice Boltzmann Method
+LOCATION:Room 408 B\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Course] Speakers: Wei Li\, Chaoyang Lyu\, Mengyun Liu\, Yixi
+ n Chen\, Mathieu Desbrun\, Kui Wu\, Xiaopei Liu
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Fluid Simulation with the Lattice Boltzmann Me
+ thod
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s059@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260719T180000
+DTEND;TZID=America/Los_Angeles:20260719T204500
+SUMMARY:SIGGRAPH: Papers Fast Forward
+LOCATION:Hall K\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Art Paper\, Technical Paper]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Papers Fast Forward
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s061@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T080000
+DTEND;TZID=America/Los_Angeles:20260720T084500
+SUMMARY:SIGGRAPH: Frontier Talk: Write Once\, Read ALWAYS: Reading Comput
+ er Graphics through Critical Code Studies
+LOCATION:Room 408 B\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Frontiers] Speakers: Mark Marino
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Frontier Talk: Write Once\, Read ALWAYS: Readi
+ ng Computer Graphics through Critical Code Studies
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s066@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T090000
+DTEND;TZID=America/Los_Angeles:20260720T100000
+SUMMARY:SIGGRAPH: Substance by Adobe | The AI Inflection Point: What It A
+ ctually Means for the Next Generation of 3D Artists
+LOCATION:Room 411\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Educator's Day Session]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Substance by Adobe | The AI Inflection Point: 
+ What It Actually Means for the Next Generation of 3D Artists
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s068@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T090000
+DTEND;TZID=America/Los_Angeles:20260720T100500
+SUMMARY:SIGGRAPH: Numerical Geometry a la Mode
+LOCATION:Room 408 B\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Paper]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Numerical Geometry a la Mode
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s071@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T090000
+DTEND;TZID=America/Los_Angeles:20260720T103000
+SUMMARY:SIGGRAPH: SIGGRAPH 2026 Opening Session & Keynote: Lanny Smoot — 
+ Inventions\, Innovations\, and Imagination: Lanny Smoot's Prolific Path
+LOCATION:Hall K\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Keynote Speaker] Speakers: Lanny Smoot
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: SIGGRAPH 2026 Opening Session & Keynote: Lanny
+  Smoot — Inventions\, Innovations\, and Imagination: Lanny Smoot's Prolif
+ ic Path
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s074@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T090000
+DTEND;TZID=America/Los_Angeles:20260720T121500
+SUMMARY:SIGGRAPH: Graphics4Science 2026: Graphics for Cross-Scale Reliabl
+ e Scientific Instruments
+LOCATION:Room 406 AB\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Workshop] Speakers: Minghao Guo\, Mina Konaković L
+ uković\, Qixing Huang\, Yin Yang\, Chenfanfu Jiang\, Wojciech Matusik\, P
+ eter Yichen Chen\, Wolfgang Heidrich\, Ellen Zhong\, Karsten Kreis
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Graphics4Science 2026: Graphics for Cross-Scal
+ e Reliable Scientific Instruments
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s084@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T093000
+DTEND;TZID=America/Los_Angeles:20260720T103000
+SUMMARY:SIGGRAPH: Can AI Judge Its Own Work? Self-Assessment and Trust in
+  Creative AI Pipelines
+LOCATION:Room 510\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Birds of a Feather] Speakers: Tyler Varacchi
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Can AI Judge Its Own Work? Self-Assessment and
+  Trust in Creative AI Pipelines
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s098@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T104500
+DTEND;TZID=America/Los_Angeles:20260720T123500
+SUMMARY:SIGGRAPH: Generative 3D & Editing
+LOCATION:Room 408 B\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Paper]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Generative 3D & Editing
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s104@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T110000
+DTEND;TZID=America/Los_Angeles:20260720T120000
+SUMMARY:SIGGRAPH: NVIDIA: How AI is Changing Education
+LOCATION:Room 411\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Educator's Day Session]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: NVIDIA: How AI is Changing Education
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s113@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T120000
+DTEND;TZID=America/Los_Angeles:20260720T130000
+SUMMARY:SIGGRAPH: The Geometry Gap: Ground-Truth 4D Data for World Models
+  and Physical AI
+LOCATION:Room 513\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Birds of a Feather] Speakers: Tyler Raciti
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: The Geometry Gap: Ground-Truth 4D Data for Wor
+ ld Models and Physical AI
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s116@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T123000
+DTEND;TZID=America/Los_Angeles:20260720T133000
+SUMMARY:SIGGRAPH: Designing Interfaces for Aphantasia
+LOCATION:Room 510\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Birds of a Feather] Speakers: David Shorey
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Designing Interfaces for Aphantasia
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s117@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T130000
+DTEND;TZID=America/Los_Angeles:20260720T133000
+SUMMARY:SIGGRAPH: Epic Games | Preparing Students for Real-Time: The Hidd
+ en Production Shift in 3D Animation
+LOCATION:Room 411\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Educator's Day Session]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Epic Games | Preparing Students for Real-Time:
+  The Hidden Production Shift in 3D Animation
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s129@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T140000
+DTEND;TZID=America/Los_Angeles:20260720T150000
+SUMMARY:SIGGRAPH: Controlling the Frame: AI VFX\, Generative Video\, and 
+ the Future of Compositing
+LOCATION:Room 513\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Birds of a Feather] Speakers: Hoon Kim\, Conrad Curtis\, Sof
+ ia Pensado
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Controlling the Frame: AI VFX\, Generative Vid
+ eo\, and the Future of Compositing
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s131@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T140000
+DTEND;TZID=America/Los_Angeles:20260720T153000
+SUMMARY:SIGGRAPH: 3D Gaussian Splatting I
+LOCATION:Room 408 A\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Paper]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: 3D Gaussian Splatting I
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s135@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T140000
+DTEND;TZID=America/Los_Angeles:20260720T153000
+SUMMARY:SIGGRAPH: Video Generation
+LOCATION:Room 408 B\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Paper]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Video Generation
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s138@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T140000
+DTEND;TZID=America/Los_Angeles:20260720T171500
+SUMMARY:SIGGRAPH: Differentiable Physics for Graphics and AI
+LOCATION:Room 406 AB\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[Technical Workshop] Speakers: Minchen Li\, Chenfanfu Jiang\,
+  Yin Yang\, Tuur Stuyck\, Ming Lin\, Denis Zorin\, Miles Macklin\, Guying
+  Lin\, Yunuo Chen
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Differentiable Physics for Graphics and AI
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:sig26-s140@siggraph2026.planner
+DTSTAMP:20260701T000000Z
+DTSTART;TZID=America/Los_Angeles:20260720T141500
+DTEND;TZID=America/Los_Angeles:20260720T151500
+SUMMARY:SIGGRAPH: Best of Eurographics 2026
+LOCATION:Room 404 AB\, SIGGRAPH 2026\, Los Angeles
+DESCRIPTION:[ACM SIGGRAPH 365]
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Starting soon: Best of Eurographics 2026
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
