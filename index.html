@@ -91,7 +91,6 @@ a.offlink:hover{text-decoration:underline}
   .note{font-size:12px; color:var(--ink2); margin-top:10px; padding:0 4px}
   .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 18px; border-radius:10px; font-size:13.5px; opacity:0; pointer-events:none; transition:opacity .25s; z-index:99; max-width:92vw; text-align:center}
   .toast.show{opacity:.96}
-  .pdfmark{font-size:10.5px; color:#8a6d1a; font-weight:700; margin-left:6px}
   @media (max-width:560px){
     .tcol{flex-basis:60px}
     .gcal span{display:none}
@@ -291,12 +290,10 @@ function card(s, confSet){
   const div = document.createElement("div");
   div.className = "card"+(on?" pinned":"");
   div.id = "c_"+s.id;
-  const isPre = PREPINNED.includes(s.id);
   div.innerHTML = `
     <div class="tcol"><b>${fmt12(s.start)}</b>– ${fmt12(s.end)}</div>
     <div class="mid">
       <span class="badge" style="background:${typeColor(s.type)}">${esc(s.type.split(",")[0].trim())}</span>
-      ${isPre?'<span class="pdfmark">✎ from your PDF</span>':""}
       <div class="title">${s.sid?`<a class="offlink" target="_blank" rel="noopener" title="open on the official schedule" href="${sessURL(s)}">${esc(s.title)}<span class="ext">↗</span></a>`:esc(s.title)}</div>
       ${s.who?`<div class="who">${esc(s.who)}</div>`:""}
       <div class="loc">📍 ${esc(s.loc)}</div>
@@ -398,8 +395,7 @@ function render(){
           <option value="0">none</option>
         </select>
       </label>
-      <button class="btn primary" id="dlics">⬇ Export .ics for Google Calendar</button>
-      <button class="btn ghost" id="reseed">Restore PDF picks</button>`;
+      <button class="btn primary" id="dlics">⬇ Export .ics for Google Calendar</button>`;
     main.appendChild(bar);
     const note = document.createElement("div");
     note.className = "note";
@@ -413,10 +409,6 @@ function render(){
       if(list.length) main.appendChild(daySection(day, list, confSet));
     }
     document.getElementById("dlics").onclick = downloadICS;
-    document.getElementById("reseed").onclick = ()=>{
-      for(const id of PREPINNED) pinned.add(id);
-      savePins(); render(); toast("Your annotated sessions from the PDF are pinned again.");
-    };
     return;
   }
 
