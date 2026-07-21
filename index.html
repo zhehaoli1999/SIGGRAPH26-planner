@@ -111,7 +111,7 @@ a.offlink:hover{text-decoration:underline}
 </header>
 
 <div class="controls">
-  <input type="search" id="q" placeholder="Search titles, speakers, paper titles &amp; authors…">
+  <input type="search" id="q" placeholder="Search titles, speakers, papers &amp; authors… (typo-friendly)">
   <select id="typef"><option value="">All programs</option></select>
 </div>
 <div class="kwrow" id="kwrow">
@@ -154,7 +154,7 @@ function savePins(){ if(storageOK){ try{ localStorage.setItem("sig26pins", JSON.
 
 // ---- ui state ----
 let view = "All";   // All | Overview | day name | Agenda
-let q = "", typef = "";
+let q = "", qt = [], typef = "";
 let ovType = "Technical Paper";  // category shown in the Overview grid
 
 const tabsEl = document.getElementById("tabs");
@@ -175,7 +175,45 @@ const typeSet = [...new Set(SESSIONS.map(s=>s.type.split(",")[0].trim()))].sort(
 const typefEl = document.getElementById("typef");
 for(const t of typeSet){ const o=document.createElement("option"); o.value=o.textContent=t; typefEl.appendChild(o); }
 typefEl.onchange = e=>{ typef=e.target.value; render(); };
-document.getElementById("q").oninput = e=>{ q=e.target.value.toLowerCase(); render(); };
+document.getElementById("q").oninput = e=>{ q=e.target.value.toLowerCase(); qt=words(q); render(); };
+
+// ---- fuzzy text search ----
+function normStr(x){ return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+function words(x){ return normStr(x).split(/[^a-z0-9]+/).filter(Boolean); }
+// bounded optimal-string-alignment distance (Levenshtein + adjacent transposition)
+function editLe(a,b,max){
+  const la=a.length, lb=b.length;
+  if(Math.abs(la-lb)>max) return false;
+  let prev2=null, prev=Array.from({length:lb+1},(_,j)=>j);
+  for(let i=1;i<=la;i++){
+    const cur=new Array(lb+1); cur[0]=i; let rowMin=i;
+    for(let j=1;j<=lb;j++){
+      const cost = a[i-1]===b[j-1]?0:1;
+      let v = Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
+      if(prev2 && i>1 && j>1 && a[i-1]===b[j-2] && a[i-2]===b[j-1]) v=Math.min(v, prev2[j-2]+1);
+      cur[j]=v; if(v<rowMin) rowMin=v;
+    }
+    if(rowMin>max) return false;
+    prev2=prev; prev=cur;
+  }
+  return prev[lb]<=max;
+}
+function tokHit(t, ws){
+  const tol = t.length>=9?2 : t.length>=5?1 : 0;
+  for(const w of ws){
+    if(w.includes(t)) return true;
+    if(!tol) continue;
+    if(editLe(t,w,tol)) return true;
+    if(w.length>t.length && editLe(t, w.slice(0,t.length+1), tol)) return true; // prefix-fuzzy
+  }
+  return false;
+}
+function sessWords(s){
+  return s._w || (s._w = words([s.title,s.who,s.loc,s.type,s.chair||"",
+    ...(s.papers||[]).map(p=>p.t+" "+p.a+" "+(p.p||""))].join(" ")));
+}
+function paperWords(p){ return p._w || (p._w = words(p.t+" "+p.a+" "+(p.p||""))); }
+function paperTextMatch(p){ return qt.length>0 && qt.every(t=>tokHit(t, paperWords(p))); }
 
 // ---- paper keyword filter ----
 const KWABBR = {"Artificial Intelligence/Machine Learning":"AI/ML"};
@@ -184,9 +222,9 @@ let kwSel = new Set(ALLKW);
 const kwActive = ()=> kwSel.size < ALLKW.length;
 function kwMatch(p){ return !!(p.k && p.k.some(k=>kwSel.has(k))); }
 function paperHit(p){
-  const qh = q && paperHay(p).includes(q);
+  const qh = paperTextMatch(p);
   const kh = kwActive() && kwMatch(p);
-  if(q && kwActive()) return !!(qh && kh);
+  if(qt.length && kwActive()) return !!(qh && kh);
   return !!(qh || kh);
 }
 function renderKws(){
@@ -202,11 +240,11 @@ function renderKws(){
   }
   const tot = SESSIONS.reduce((n,s)=>n+(s.papers?s.papers.length:0),0);
   let n = tot;
-  if(kwActive()||q){
+  if(kwActive()||qt.length){
     n = 0;
     for(const s of SESSIONS) for(const p of (s.papers||[])){
       if(kwActive() && !kwMatch(p)) continue;
-      if(q && !paperHay(p).includes(q)) continue;
+      if(qt.length && !paperTextMatch(p)) continue;
       n++;
     }
   }
@@ -215,16 +253,10 @@ function renderKws(){
 document.getElementById("kwAll").onclick = ()=>{ kwSel = new Set(ALLKW); render(); };
 document.getElementById("kwNone").onclick = ()=>{ kwSel = new Set(); render(); };
 
-function paperHay(p){ return (p.t+" "+p.a+(p.p?" "+p.p:"")).toLowerCase(); }
 function matches(s){
   if(typef && s.type.split(",")[0].trim()!==typef) return false;
   if(kwActive() && !(s.papers && s.papers.some(kwMatch))) return false;
-  if(q){
-    const hay = (s.title+" "+s.who+" "+s.loc+" "+s.type+(s.chair?" "+s.chair:"")).toLowerCase();
-    if(hay.includes(q)) return true;
-    if(s.papers && s.papers.some(p=>paperHay(p).includes(q))) return true;
-    return false;
-  }
+  if(qt.length) return qt.every(t=>tokHit(t, sessWords(s)));
   return true;
 }
 

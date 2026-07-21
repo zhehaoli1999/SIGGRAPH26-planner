@@ -6,7 +6,7 @@ A single-file web app for planning your [SIGGRAPH 2026](https://s2026.siggraph.o
 
 ## Features
 
-- Full conference schedule — 487 sessions across all five days, browsable by day, program type, and free-text search
+- Full conference schedule — 487 sessions across all five days, browsable by day, program type, and typo-tolerant fuzzy search (word-order independent, accent-insensitive, ~1–2 character edits forgiven: "gaussain splatting", "ruizen hu" and "layots procedural" all find what you meant)
 - Paper-level detail for all 58 Technical Papers sessions (406 papers: titles, full author lists, presenters, per-paper times, thumbnails, session chairs) pulled from the official schedule — search any author's name to find their talk; matching papers expand and highlight automatically
 - Keyword filter chips (official taxonomy: Geometry, AI/ML, Animation, Fabrication, …) — narrow all 406 papers by topic; matching papers highlight and their sessions auto-expand, with keyword tags shown on every paper
 - Overview tab — Keenan-Crane-style per-day columns summarizing any program category (default: Technical Papers); pin from the list (★) or tap a session to jump to its full card
