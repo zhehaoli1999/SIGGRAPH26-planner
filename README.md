@@ -20,7 +20,6 @@ A single-file web app for planning your [SIGGRAPH 2026](https://s2026.siggraph.o
 ## Files
 
 - `index.html` — the app (data, CSS and JS inlined; paper thumbnails lazy-load from `data/thumbs/`)
-- `siggraph2026_my_picks.ics` — ready-to-import calendar of the initially pinned sessions (15-min reminders, `America/Los_Angeles` timezone)
 - `data/sessions.json` — the extracted schedule data
 - `data/thumbs/` — paper representative images (resized to 200 px thumbnails)
 
