@@ -44,6 +44,17 @@
   .gcal{font-size:11px; color:var(--teal2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 6px; white-space:nowrap}
   .gcal:hover{background:#f2ede2}
   .conflict{font-size:11px; font-weight:700; color:var(--red); margin-top:4px}
+.trange{display:flex; flex-direction:column; justify-content:center; gap:1px; width:200px}
+.trlabel{font-size:11px; color:var(--ink2); font-weight:700}
+.trlabel.active{color:var(--teal2)}
+.trslider{position:relative; height:20px}
+.trslider::before{content:""; position:absolute; left:0; right:0; top:8px; height:4px; background:var(--line); border-radius:2px}
+.trfill{position:absolute; top:8px; height:4px; background:var(--teal2); border-radius:2px}
+.trslider input[type=range]{position:absolute; left:0; top:0; width:100%; height:20px; margin:0; -webkit-appearance:none; appearance:none; background:none; pointer-events:none}
+.trslider input[type=range]::-webkit-slider-runnable-track{background:transparent; height:20px}
+.trslider input[type=range]::-moz-range-track{background:transparent; height:20px}
+.trslider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; appearance:none; width:15px; height:15px; margin-top:2.5px; border-radius:50%; background:var(--teal2); border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,.35); pointer-events:auto; cursor:pointer}
+.trslider input[type=range]::-moz-range-thumb{width:11px; height:11px; border-radius:50%; background:var(--teal2); border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,.35); pointer-events:auto; cursor:pointer}
 .ovwrap{display:flex; gap:10px; overflow-x:auto; max-width:980px; margin:12px auto 0; padding:0 16px 12px; align-items:flex-start; -webkit-overflow-scrolling:touch}
 .ovcol{flex:0 0 235px; background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
 .ovhead{display:flex; justify-content:space-between; align-items:baseline; padding:9px 12px; background:#fbeee6; font-weight:800}
@@ -113,6 +124,14 @@ a.offlink:hover{text-decoration:underline}
 <div class="controls">
   <input type="search" id="q" placeholder="Search titles, speakers, papers &amp; authors… (typo-friendly)">
   <select id="typef"><option value="">All programs</option></select>
+  <div class="trange" title="show only sessions ending inside this window">
+    <span class="trlabel" id="trlabel"></span>
+    <div class="trslider">
+      <div class="trfill" id="trfill"></div>
+      <input type="range" id="tlo" min="16" max="40" value="16" step="1" aria-label="earliest end time">
+      <input type="range" id="thi" min="16" max="40" value="40" step="1" aria-label="latest end time">
+    </div>
+  </div>
 </div>
 <div class="kwrow" id="kwrow">
   <span class="kwlabel">Paper keywords</span>
@@ -174,6 +193,33 @@ const typefEl = document.getElementById("typef");
 for(const t of typeSet){ const o=document.createElement("option"); o.value=o.textContent=t; typefEl.appendChild(o); }
 typefEl.onchange = e=>{ typef=e.target.value; render(); };
 document.getElementById("q").oninput = e=>{ q=e.target.value.toLowerCase(); qt=words(q); render(); };
+
+// ---- end-time range filter (slider steps = half hours, 16=8:00am .. 40=8:00pm) ----
+const TMIN=16, TMAX=40;
+let tLo=TMIN, tHi=TMAX;
+const timeActive = ()=> tLo>TMIN || tHi<TMAX;
+function timeOk(s){
+  if(!timeActive()) return true;
+  const [h,m] = s.end.split(":").map(Number);
+  const e = h*60+m;
+  if(tLo>TMIN && e < tLo*30) return false;   // extremes act as unbounded:
+  if(tHi<TMAX && e > tHi*30) return false;   // full range shows everything
+  return true;
+}
+function fmtSlot(v){ return fmt12(Math.floor(v/2)+":"+(v%2?"30":"00")); }
+const tloEl = document.getElementById("tlo"), thiEl = document.getElementById("thi");
+function syncTr(){
+  const lab = document.getElementById("trlabel");
+  lab.textContent = "ends "+(tLo===TMIN?"8:00am":fmtSlot(tLo))+" – "+(tHi===TMAX?"8:00pm+":fmtSlot(tHi));
+  lab.classList.toggle("active", timeActive());
+  const span = TMAX-TMIN;
+  const fill = document.getElementById("trfill");
+  fill.style.left = ((tLo-TMIN)/span*100)+"%";
+  fill.style.right = ((TMAX-tHi)/span*100)+"%";
+}
+tloEl.oninput = e=>{ tLo = Math.min(+e.target.value, tHi); e.target.value = tLo; syncTr(); render(); };
+thiEl.oninput = e=>{ tHi = Math.max(+e.target.value, tLo); e.target.value = tHi; syncTr(); render(); };
+syncTr();
 
 // ---- fuzzy text search ----
 function normStr(x){ return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
@@ -253,6 +299,7 @@ document.getElementById("kwNone").onclick = ()=>{ kwSel = new Set(); render(); }
 
 function matches(s){
   if(typef && s.type.split(",")[0].trim()!==typef) return false;
+  if(!timeOk(s)) return false;
   if(kwActive() && !(s.papers && s.papers.some(kwMatch))) return false;
   if(qt.length) return qt.every(t=>tokHit(t, sessWords(s)));
   return true;
@@ -377,7 +424,7 @@ function render(){
     wrap.className = "ovwrap";
     let anyCol = false;
     for(const day of DAYS){
-      let list = SESSIONS.filter(s=>s.day===day && s.type.split(",")[0].trim()===ovType);
+      let list = SESSIONS.filter(s=>s.day===day && s.type.split(",")[0].trim()===ovType && timeOk(s));
       if(ovType==="Technical Paper" && kwActive()) list = list.filter(s=>s.papers && s.papers.some(kwMatch));
       if(!list.length) continue;
       anyCol = true;
