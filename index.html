@@ -124,12 +124,20 @@ a.offlink:hover{text-decoration:underline}
 <div class="controls">
   <input type="search" id="q" placeholder="Search titles, speakers, papers &amp; authors… (typo-friendly)">
   <select id="typef"><option value="">All programs</option></select>
-  <div class="trange" title="show only sessions ending inside this window">
-    <span class="trlabel" id="trlabel"></span>
+  <div class="trange" title="show only sessions starting inside this window">
+    <span class="trlabel" id="tslabel"></span>
     <div class="trslider">
-      <div class="trfill" id="trfill"></div>
-      <input type="range" id="tlo" min="16" max="40" value="16" step="1" aria-label="earliest end time">
-      <input type="range" id="thi" min="16" max="40" value="40" step="1" aria-label="latest end time">
+      <div class="trfill" id="tsfill"></div>
+      <input type="range" id="tslo" min="16" max="40" value="16" step="1" aria-label="earliest start time">
+      <input type="range" id="tshi" min="16" max="40" value="40" step="1" aria-label="latest start time">
+    </div>
+  </div>
+  <div class="trange" title="show only sessions ending inside this window">
+    <span class="trlabel" id="telabel"></span>
+    <div class="trslider">
+      <div class="trfill" id="tefill"></div>
+      <input type="range" id="telo" min="16" max="40" value="16" step="1" aria-label="earliest end time">
+      <input type="range" id="tehi" min="16" max="40" value="40" step="1" aria-label="latest end time">
     </div>
   </div>
 </div>
@@ -194,32 +202,36 @@ for(const t of typeSet){ const o=document.createElement("option"); o.value=o.tex
 typefEl.onchange = e=>{ typef=e.target.value; render(); };
 document.getElementById("q").oninput = e=>{ q=e.target.value.toLowerCase(); qt=words(q); render(); };
 
-// ---- end-time range filter (slider steps = half hours, 16=8:00am .. 40=8:00pm) ----
+// ---- start/end time range filters (slider steps = half hours, 16=8:00am .. 40=8:00pm) ----
 const TMIN=16, TMAX=40;
-let tLo=TMIN, tHi=TMAX;
-const timeActive = ()=> tLo>TMIN || tHi<TMAX;
-function timeOk(s){
-  if(!timeActive()) return true;
-  const [h,m] = s.end.split(":").map(Number);
-  const e = h*60+m;
-  if(tLo>TMIN && e < tLo*30) return false;   // extremes act as unbounded:
-  if(tHi<TMAX && e > tHi*30) return false;   // full range shows everything
+const tstart = {lo:TMIN, hi:TMAX};   // window on session start time
+const tend   = {lo:TMIN, hi:TMAX};   // window on session end time
+function inWin(hm, w){
+  if(w.lo===TMIN && w.hi===TMAX) return true;
+  const [h,m] = hm.split(":").map(Number);
+  const v = h*60+m;
+  if(w.lo>TMIN && v < w.lo*30) return false;   // extremes act as unbounded:
+  if(w.hi<TMAX && v > w.hi*30) return false;   // full range shows everything
   return true;
 }
+function timeOk(s){ return inWin(s.start, tstart) && inWin(s.end, tend); }
 function fmtSlot(v){ return fmt12(Math.floor(v/2)+":"+(v%2?"30":"00")); }
-const tloEl = document.getElementById("tlo"), thiEl = document.getElementById("thi");
-function syncTr(){
-  const lab = document.getElementById("trlabel");
-  lab.textContent = "ends "+(tLo===TMIN?"8:00am":fmtSlot(tLo))+" – "+(tHi===TMAX?"8:00pm+":fmtSlot(tHi));
-  lab.classList.toggle("active", timeActive());
-  const span = TMAX-TMIN;
-  const fill = document.getElementById("trfill");
-  fill.style.left = ((tLo-TMIN)/span*100)+"%";
-  fill.style.right = ((TMAX-tHi)/span*100)+"%";
+function setupRange(prefix, w, word){
+  const lo = document.getElementById(prefix+"lo"), hi = document.getElementById(prefix+"hi");
+  const lab = document.getElementById(prefix+"label"), fill = document.getElementById(prefix+"fill");
+  const sync = ()=>{
+    lab.textContent = word+" "+(w.lo===TMIN?"8:00am":fmtSlot(w.lo))+" – "+(w.hi===TMAX?"8:00pm+":fmtSlot(w.hi));
+    lab.classList.toggle("active", w.lo>TMIN || w.hi<TMAX);
+    const span = TMAX-TMIN;
+    fill.style.left = ((w.lo-TMIN)/span*100)+"%";
+    fill.style.right = ((TMAX-w.hi)/span*100)+"%";
+  };
+  lo.oninput = e=>{ w.lo = Math.min(+e.target.value, w.hi); e.target.value = w.lo; sync(); render(); };
+  hi.oninput = e=>{ w.hi = Math.max(+e.target.value, w.lo); e.target.value = w.hi; sync(); render(); };
+  sync();
 }
-tloEl.oninput = e=>{ tLo = Math.min(+e.target.value, tHi); e.target.value = tLo; syncTr(); render(); };
-thiEl.oninput = e=>{ tHi = Math.max(+e.target.value, tLo); e.target.value = tHi; syncTr(); render(); };
-syncTr();
+setupRange("ts", tstart, "starts");
+setupRange("te", tend, "ends");
 
 // ---- fuzzy text search ----
 function normStr(x){ return x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
